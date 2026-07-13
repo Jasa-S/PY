@@ -52,6 +52,7 @@ const knownLocalFiles = new Set([
   'assets/oboe-score-dark.jpg',
   'assets/oboe-reed-portrait.jpg',
   'assets/oboe-score-light.jpg',
+  'assets/manrope-variable.ttf',
   'shared.css',
   'site-icon.svg',
   'theme.js'
@@ -89,6 +90,10 @@ for (const [page, expectations] of Object.entries(pages)) {
     if (!html.includes(text)) throw new Error(`${page}: missing required content: ${text}`);
   }
 
+  if (html.includes('fonts.googleapis.com') || html.includes("prefers-color-scheme: dark")) {
+    throw new Error(`${page}: external or conflicting font/theme bootstrap remains`);
+  }
+
   const references = [...html.matchAll(/(?:href|src)="(?!https?:|mailto:|#)([^"]+)"/g)]
     .map((match) => match[1].split(/[?#]/, 1)[0]);
 
@@ -99,6 +104,14 @@ for (const [page, expectations] of Object.entries(pages)) {
 }
 
 const home = await readFile('index.html', 'utf8');
+const css = await readFile('shared.css', 'utf8');
+
+await access('assets/manrope-variable.ttf');
+await access('assets/manrope-OFL.txt');
+
+if (!css.includes('@font-face') || !css.includes('manrope-variable.ttf')) {
+  throw new Error('shared.css: self-hosted typography is not configured');
+}
 if (home.includes('Profil in Zahlen') || home.includes('project-grid') || home.includes('Lebenslauf entdecken')) {
   throw new Error('index.html: homepage still leads with CV-oriented framing');
 }

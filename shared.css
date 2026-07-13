@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Manrope";
+    src: url("assets/manrope-variable.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: swap;
+}
+
 *,
 *::before,
 *::after {
@@ -6,14 +14,15 @@
 
 :root {
     color-scheme: light;
-    --paper: #f6f5f0;
-    --paper-bright: #fbfaf7;
-    --ink: #171714;
-    --muted: #747169;
-    --line: #d7d3ca;
-    --soft: #ece9e1;
-    --focus: #715e3d;
-    --wide: 0.17em;
+    --paper: #f7f5f0;
+    --paper-bright: #fcfbf8;
+    --ink: #191916;
+    --body: #44423d;
+    --muted: #625f58;
+    --line: #d6d1c8;
+    --line-strong: #bcb6aa;
+    --focus: #6f552d;
+    --label-spacing: 0.14em;
 }
 
 html {
@@ -27,9 +36,11 @@ body {
     margin: 0;
     background: var(--paper);
     color: var(--ink);
-    font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Manrope", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
     font-size: 1rem;
     font-weight: 400;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -52,9 +63,10 @@ a:focus-visible {
     top: 0.75rem;
     left: 0.75rem;
     z-index: 1000;
-    padding: 0.65rem 0.85rem;
+    padding: 0.7rem 0.9rem;
     background: var(--paper-bright);
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+    text-decoration: none;
     transform: translateY(-160%);
 }
 
@@ -62,7 +74,7 @@ a:focus-visible {
     transform: translateY(0);
 }
 
-/* Image-led landing page */
+/* Homepage */
 
 .editorial-home {
     position: relative;
@@ -72,40 +84,40 @@ a:focus-visible {
 
 .editorial-header {
     position: absolute;
-    top: 4.35rem;
+    top: 4.15rem;
     left: 50%;
     z-index: 20;
     display: flex;
-    width: min(76.25rem, calc(100% - 3rem));
+    width: min(77.5rem, calc(100% - 2.5rem));
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
     transform: translateX(-50%);
-    text-transform: uppercase;
 }
 
 .editorial-brand,
 .editorial-nav a {
-    font-size: 0.68rem;
-    font-weight: 400;
-    letter-spacing: var(--wide);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1;
     text-decoration: none;
+    text-transform: uppercase;
     white-space: nowrap;
 }
 
 .editorial-brand {
-    color: var(--ink);
-    font-weight: 600;
+    font-weight: 650;
 }
 
 .editorial-nav {
     display: flex;
     align-items: center;
-    gap: clamp(1.4rem, 3vw, 3.4rem);
+    gap: clamp(1.5rem, 3.2vw, 3.6rem);
 }
 
 .editorial-nav a {
-    color: rgba(23, 23, 20, 0.72);
+    color: rgba(25, 25, 22, 0.78);
     transition: color 180ms ease;
 }
 
@@ -161,7 +173,7 @@ a:focus-visible {
 .artist-title {
     position: absolute;
     right: 1.7rem;
-    bottom: 18%;
+    bottom: 17%;
     left: 1.7rem;
     color: #fff;
     text-transform: uppercase;
@@ -169,60 +181,61 @@ a:focus-visible {
 
 .artist-title h1 {
     margin: 0;
-    font-size: clamp(1.05rem, 1.8vw, 1.42rem);
-    font-weight: 600;
-    letter-spacing: 0.035em;
-    line-height: 1.1;
+    font-size: clamp(1.18rem, 1.9vw, 1.55rem);
+    font-weight: 650;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
 }
 
 .artist-title p {
-    margin: 0.55rem 0 0;
-    font-size: 0.54rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
+    margin: 0.6rem 0 0;
+    font-size: 0.67rem;
+    font-weight: 550;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
 }
 
 .editorial-footer {
     position: absolute;
     right: 1.25rem;
-    bottom: 1.05rem;
+    bottom: 1.15rem;
     left: 1.25rem;
     z-index: 10;
     display: flex;
     justify-content: space-between;
-    color: rgba(23, 23, 20, 0.56);
-    font-size: 0.52rem;
-    letter-spacing: 0.14em;
+    color: rgba(25, 25, 22, 0.68);
+    font-size: 0.67rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.45;
     text-transform: uppercase;
     pointer-events: none;
-}
-
-.editorial-footer span {
-    max-width: 7.8rem;
-    line-height: 1.45;
 }
 
 .editorial-footer span:last-child {
     text-align: right;
 }
 
-/* Editorial inner pages */
+/* Shared inner-page header */
 
 .page-category {
+    display: grid;
     width: min(68rem, calc(100% - 4rem));
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: clamp(3rem, 7vw, 7rem);
     margin: 0 auto;
-    padding-top: 2.4rem;
+    padding-top: 2.5rem;
 }
 
 .site-header {
     display: flex;
+    grid-column: 1;
+    grid-row: 1;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
 }
 
 .site-header-compact {
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .brand-link {
@@ -233,45 +246,45 @@ a:focus-visible {
 }
 
 .header-name {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: var(--wide);
+    font-size: 0.82rem;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
 }
 
 .header-subtitle {
-    margin-top: 0.42rem;
+    margin-top: 0.4rem;
     color: var(--muted);
-    font-size: 0.52rem;
-    font-weight: 400;
-    letter-spacing: 0.15em;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.35;
 }
 
-.profile-monogram,
-.header-meta {
+.profile-monogram {
     display: none;
 }
 
 .site-nav {
     display: flex;
-    gap: clamp(1.25rem, 3.6vw, 3rem);
-    margin: 2rem 0 6.5rem;
-    padding: 0 0 1.15rem;
-    overflow-x: auto;
-    border-bottom: 1px solid var(--line);
-    scrollbar-width: none;
-}
-
-.site-nav::-webkit-scrollbar {
-    display: none;
+    grid-column: 2;
+    grid-row: 1;
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(1.25rem, 3vw, 2.8rem);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .site-nav a {
     position: relative;
     flex: 0 0 auto;
     color: var(--muted);
-    font-size: 0.62rem;
-    font-weight: 400;
-    letter-spacing: 0.15em;
+    font-size: 0.71rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -283,7 +296,7 @@ a:focus-visible {
 .site-nav a[aria-current="page"]::after {
     position: absolute;
     right: 0;
-    bottom: -1.21rem;
+    bottom: -0.5rem;
     left: 0;
     height: 1px;
     background: var(--ink);
@@ -292,11 +305,15 @@ a:focus-visible {
 
 .page-category main {
     min-height: 50vh;
+    grid-column: 1 / -1;
+    margin-top: 6.5rem;
 }
 
+/* Page typography */
+
 .page-intro {
-    max-width: 49rem;
-    margin-bottom: 5.5rem;
+    max-width: 48rem;
+    margin-bottom: 5rem;
 }
 
 .eyebrow,
@@ -305,52 +322,53 @@ a:focus-visible {
 .masterclass-date {
     margin: 0;
     color: var(--muted);
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: var(--wide);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: var(--label-spacing);
+    line-height: 1.45;
     text-transform: uppercase;
 }
 
 .page-intro h1 {
-    margin: 0.9rem 0 0;
-    font-size: clamp(3.35rem, 8.3vw, 6.25rem);
-    font-weight: 300;
-    letter-spacing: -0.065em;
-    line-height: 0.88;
-    text-transform: uppercase;
+    margin: 0.75rem 0 0;
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    font-weight: 430;
+    letter-spacing: -0.055em;
+    line-height: 1;
 }
 
 .page-intro > p:last-child {
-    max-width: 32rem;
-    margin: 1.6rem 0 0;
+    max-width: 35rem;
+    margin: 1.45rem 0 0;
     color: var(--muted);
-    font-size: 0.86rem;
-    line-height: 1.75;
+    font-size: 0.98rem;
+    line-height: 1.7;
 }
 
 .back-link {
     display: inline-block;
-    margin-bottom: 2.25rem;
+    margin-bottom: 2rem;
     color: var(--muted);
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    font-weight: 550;
+    letter-spacing: 0.1em;
     text-decoration: none;
     text-transform: uppercase;
 }
 
 section {
-    margin-bottom: 5.5rem;
+    margin-bottom: 5.25rem;
 }
 
 .section-heading {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin: 0 0 1.7rem;
+    margin: 0 0 1.4rem;
     color: var(--muted);
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: var(--wide);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: var(--label-spacing);
     text-transform: uppercase;
 }
 
@@ -360,8 +378,14 @@ section {
     background: var(--line);
 }
 
+.text-muted {
+    color: var(--muted);
+}
+
+/* Lists and CV cards */
+
 .glass {
-    padding: 1.45rem 0;
+    padding: 1.55rem 0;
     border-top: 1px solid var(--line);
     background: transparent;
 }
@@ -381,8 +405,8 @@ section {
 .ed-title,
 .tl-title {
     margin: 0;
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.05rem;
+    font-weight: 600;
     line-height: 1.45;
 }
 
@@ -390,42 +414,43 @@ section {
 .tl-date,
 .award-date {
     color: var(--muted);
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    font-weight: 550;
+    letter-spacing: 0.07em;
+    line-height: 1.5;
     white-space: nowrap;
 }
 
 .ed-desc,
 .ed-place {
-    margin: 0.45rem 0 0;
-    font-size: 0.8rem;
-    line-height: 1.6;
+    margin: 0.48rem 0 0;
+    color: var(--body);
+    font-size: 0.9rem;
+    line-height: 1.65;
 }
 
 .ed-place {
+    color: var(--muted);
     font-style: italic;
 }
 
-.text-muted {
-    color: var(--muted);
-}
-
 .biography-body {
-    max-width: 45rem;
+    max-width: 44rem;
 }
 
 .biography-body p {
-    margin: 0 0 1.4rem;
-    color: var(--muted);
-    font-size: 0.93rem;
-    line-height: 1.9;
+    margin: 0 0 1.45rem;
+    color: var(--body);
+    font-size: 1rem;
+    line-height: 1.78;
 }
 
 .biography-body .biography-lead {
+    margin-bottom: 2rem;
     color: var(--ink);
-    font-size: clamp(1.2rem, 2.5vw, 1.65rem);
-    font-weight: 300;
-    line-height: 1.55;
+    font-size: clamp(1.28rem, 2.25vw, 1.55rem);
+    font-weight: 430;
+    line-height: 1.58;
 }
 
 .timeline-border {
@@ -433,77 +458,92 @@ section {
 }
 
 .tl-entry {
-    position: relative;
     display: grid;
-    grid-template-columns: 5rem minmax(11rem, 0.85fr) minmax(0, 1.35fr);
-    gap: 1.5rem;
+    grid-template-columns: 6rem minmax(12rem, 0.9fr) minmax(0, 1.35fr);
+    gap: 1.75rem;
     align-items: start;
-    padding: 1.5rem 0;
+    padding: 1.65rem 0;
     border-bottom: 1px solid var(--line);
 }
 
 .tl-dot {
-    position: absolute;
-    top: 1.8rem;
-    left: -1.2rem;
-    width: 0.28rem;
-    height: 0.28rem;
-    border-radius: 50%;
-    background: #a19b90;
+    display: none;
 }
 
 .tl-date {
-    margin: 0.18rem 0 0;
+    grid-column: 1;
+    grid-row: 1 / 3;
+    margin: 0.15rem 0 0;
+}
+
+.tl-title {
+    grid-column: 2;
+    grid-row: 1;
 }
 
 .tl-sub {
+    grid-column: 2;
+    grid-row: 2;
     margin: 0.5rem 0 0;
     color: var(--muted);
-    font-size: 0.72rem;
+    font-size: 0.8rem;
     font-style: italic;
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
 .tl-detail {
+    grid-column: 3;
+    grid-row: 1 / 3;
     margin: 0;
-    color: var(--muted);
-    font-size: 0.78rem;
-    line-height: 1.65;
+    color: var(--body);
+    font-size: 0.9rem;
+    line-height: 1.68;
 }
 
 .cv-current {
     display: grid;
     grid-template-columns: 7rem minmax(0, 1fr);
-    gap: 2rem;
-    padding: 1.8rem 0;
+    grid-template-rows: auto auto;
+    column-gap: 2rem;
+    row-gap: 0.45rem;
+    padding: 1.7rem 0;
     border-bottom: 1px solid var(--line);
 }
 
+.cv-current .eyebrow {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    padding-top: 0.2rem;
+}
+
 .cv-current h2 {
+    grid-column: 2;
+    grid-row: 1;
     margin: 0;
-    font-size: 1.08rem;
-    font-weight: 500;
-    line-height: 1.45;
+    font-size: 1.12rem;
+    font-weight: 600;
+    line-height: 1.5;
 }
 
 .cv-current > p:last-child {
     grid-column: 2;
-    margin: -1.45rem 0 0;
-    color: var(--muted);
-    font-size: 0.78rem;
-    line-height: 1.6;
+    grid-row: 2;
+    margin: 0;
+    color: var(--body);
+    font-size: 0.9rem;
+    line-height: 1.65;
 }
 
 .category-grid,
 .masterclass-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 2.5rem;
+    column-gap: 2.75rem;
 }
 
 .category-card {
     display: flex;
-    min-height: 13.5rem;
+    min-height: 13rem;
     flex-direction: column;
     color: var(--ink);
     text-decoration: none;
@@ -511,17 +551,17 @@ section {
 
 .category-card h3,
 .masterclass-card h2 {
-    margin: 1.15rem 0 0;
-    font-size: 1.05rem;
-    font-weight: 500;
-    line-height: 1.45;
+    margin: 1rem 0 0;
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.48;
 }
 
 .category-card > p,
 .masterclass-card > p:not(.masterclass-date) {
     margin: 0.6rem 0 1.5rem;
-    color: var(--muted);
-    font-size: 0.78rem;
+    color: var(--body);
+    font-size: 0.9rem;
     line-height: 1.65;
 }
 
@@ -531,21 +571,22 @@ section {
     justify-content: space-between;
     margin-top: auto;
     color: var(--muted);
-    font-size: 0.65rem;
+    font-size: 0.72rem;
+    font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
 .masterclass-card {
-    min-height: 12rem;
+    min-height: 12.5rem;
 }
 
 .masterclass-card > span {
     display: block;
     color: var(--muted);
-    font-size: 0.72rem;
+    font-size: 0.82rem;
     font-style: italic;
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
 .award-card {
@@ -555,9 +596,9 @@ section {
 }
 
 .award-card h2 {
-    margin: 0.55rem 0 0;
-    font-size: 1.05rem;
-    font-weight: 500;
+    margin: 0.5rem 0 0;
+    font-size: 1.08rem;
+    font-weight: 600;
     line-height: 1.5;
 }
 
@@ -565,12 +606,13 @@ section {
 .award-card div > span {
     display: block;
     margin: 0.55rem 0 0;
-    color: var(--muted);
-    font-size: 0.76rem;
-    line-height: 1.6;
+    color: var(--body);
+    font-size: 0.88rem;
+    line-height: 1.65;
 }
 
 .award-card div > span {
+    color: var(--muted);
     font-style: italic;
 }
 
@@ -589,28 +631,31 @@ section {
 
 .language-code {
     display: grid;
-    width: 2.9rem;
-    height: 2.9rem;
+    width: 3rem;
+    height: 3rem;
     flex: 0 0 auto;
     place-items: center;
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-strong);
     border-radius: 50%;
     color: var(--muted);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
 }
 
 .language-card h2 {
     margin: 0;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.98rem;
+    font-weight: 600;
 }
 
 .language-card p {
     margin: 0.4rem 0 0;
     color: var(--muted);
-    font-size: 0.72rem;
+    font-size: 0.82rem;
 }
+
+/* Contact and next-step sections */
 
 .contact-card {
     display: flex;
@@ -623,23 +668,25 @@ section {
 }
 
 .contact-card h2 {
-    margin: 0.6rem 0 0;
-    font-size: 1.05rem;
-    font-weight: 500;
+    margin: 0.55rem 0 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.45;
 }
 
 .contact-card div > p:last-child {
-    margin: 0.5rem 0 0;
-    color: var(--muted);
-    font-size: 0.75rem;
+    margin: 0.55rem 0 0;
+    color: var(--body);
+    font-size: 0.88rem;
 }
 
 .contact-button {
     flex: 0 0 auto;
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.3rem;
     border-bottom: 1px solid var(--ink);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -658,65 +705,69 @@ section {
     width: 4rem;
     height: 4rem;
     place-items: center;
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-strong);
     border-radius: 50%;
     color: var(--muted);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    font-weight: 500;
 }
 
 .contact-page-card h2 {
-    margin: 0.6rem 0 0;
-    font-size: 1.1rem;
-    font-weight: 500;
+    margin: 0.55rem 0 0;
+    font-size: 1.12rem;
+    font-weight: 600;
 }
 
 .contact-page-card a {
     display: inline-block;
     margin-top: 0.85rem;
-    font-size: 0.86rem;
+    font-size: 1rem;
+    font-weight: 500;
     text-decoration-thickness: 1px;
-    text-underline-offset: 0.25rem;
+    text-underline-offset: 0.28rem;
 }
 
 .contact-page-card div > p:last-child {
-    margin: 0.65rem 0 0;
+    margin: 0.7rem 0 0;
     color: var(--muted);
-    font-size: 0.74rem;
+    font-size: 0.84rem;
 }
 
 .contact-note h2 {
     margin: 0 0 1.2rem;
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: var(--wide);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: var(--label-spacing);
     text-transform: uppercase;
 }
 
 .badges {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.55rem;
+    gap: 0.6rem;
 }
 
 .badge {
-    padding: 0.46rem 0.75rem;
-    border: 1px solid var(--line);
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--line-strong);
     border-radius: 999px;
-    color: var(--muted);
-    font-size: 0.68rem;
+    color: var(--body);
+    font-size: 0.78rem;
 }
 
 .page-category footer {
     display: flex;
+    grid-column: 1 / -1;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    margin-top: 6rem;
-    padding: 1.4rem 0 2rem;
+    margin-top: 5.5rem;
+    padding: 1.5rem 0 2rem;
     border-top: 1px solid var(--line);
     color: var(--muted);
-    font-size: 0.55rem;
-    letter-spacing: var(--wide);
+    font-size: 0.7rem;
+    font-weight: 550;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
 }
 
@@ -741,7 +792,7 @@ section {
     }
 
     .portrait-panel:hover img {
-        transform: scale(1.018);
+        transform: scale(1.015);
     }
 
     .category-card:hover .category-link {
@@ -749,42 +800,75 @@ section {
     }
 }
 
+@media (max-width: 900px) {
+    .page-category {
+        width: min(68rem, calc(100% - 3rem));
+        column-gap: 2rem;
+    }
+
+    .site-nav {
+        gap: 1.25rem;
+    }
+
+    .site-nav a {
+        font-size: 0.68rem;
+    }
+
+    .tl-entry {
+        grid-template-columns: 5rem minmax(10rem, 0.9fr) minmax(0, 1.2fr);
+        gap: 1.25rem;
+    }
+}
+
 @media (max-width: 760px) {
+    .editorial-home {
+        display: flex;
+        min-height: 100svh;
+        flex-direction: column;
+    }
+
     .editorial-header {
-        top: 1.35rem;
-        width: calc(100% - 2rem);
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: 6.5rem;
+        flex: 0 0 6.5rem;
         align-items: flex-start;
         flex-direction: column;
         gap: 1rem;
+        padding: 1.15rem 1rem 1rem;
+        background: var(--paper);
+        transform: none;
     }
 
     .editorial-nav {
         width: 100%;
         justify-content: space-between;
-        gap: 0.7rem;
-        overflow-x: auto;
+        gap: 0.75rem;
     }
 
     .editorial-brand,
     .editorial-nav a {
-        font-size: 0.58rem;
-    }
-
-    .editorial-brand {
-        margin: -0.25rem -0.35rem;
-        padding: 0.25rem 0.35rem;
-        background: rgba(246, 245, 240, 0.9);
+        font-size: 0.68rem;
     }
 
     .editorial-hero {
         width: 100%;
-        grid-template-columns: 0.24fr 1fr 0.28fr;
+        min-height: 34rem;
+        height: calc(100svh - 6.5rem);
+        grid-template-columns: 0.2fr 1fr 0.24fr;
         gap: 0.45rem;
     }
 
+    .portrait-panel-left,
+    .portrait-panel-right {
+        height: 100%;
+    }
+
     .portrait-panel-center {
-        height: 84svh;
-        margin-top: 16svh;
+        height: calc(100% - 1.35rem);
+        margin-top: 1.35rem;
     }
 
     .portrait-panel-left img {
@@ -797,17 +881,17 @@ section {
 
     .artist-title {
         right: 1rem;
-        bottom: 15%;
+        bottom: 13%;
         left: 1rem;
     }
 
     .artist-title h1 {
-        font-size: clamp(0.92rem, 5vw, 1.25rem);
+        font-size: clamp(1.05rem, 5vw, 1.28rem);
     }
 
     .artist-title p {
-        font-size: 0.48rem;
-        line-height: 1.5;
+        font-size: 0.63rem;
+        letter-spacing: 0.12em;
     }
 
     .editorial-footer {
@@ -815,13 +899,36 @@ section {
     }
 
     .page-category {
+        display: block;
         width: calc(100% - 2rem);
-        padding-top: 1.5rem;
+        padding-top: 1.4rem;
+    }
+
+    .site-header {
+        display: block;
     }
 
     .site-nav {
-        margin: 1.6rem 0 4.5rem;
-        gap: 1.35rem;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.95rem 0.5rem;
+        margin-top: 1.6rem;
+        padding-bottom: 1.15rem;
+        border-bottom: 1px solid var(--line);
+        overflow: visible;
+    }
+
+    .site-nav a {
+        justify-self: start;
+        font-size: 0.69rem;
+    }
+
+    .site-nav a[aria-current="page"]::after {
+        bottom: -0.3rem;
+    }
+
+    .page-category main {
+        margin-top: 4.25rem;
     }
 
     .page-intro {
@@ -829,16 +936,28 @@ section {
     }
 
     .page-intro h1 {
-        font-size: clamp(2.45rem, 10.5vw, 5rem);
+        font-size: clamp(2.35rem, 10.5vw, 3.2rem);
+        letter-spacing: -0.05em;
+    }
+
+    .page-intro > p:last-child {
+        margin-top: 1.25rem;
+        font-size: 0.94rem;
     }
 
     section {
-        margin-bottom: 4rem;
+        margin-bottom: 4.25rem;
+    }
+
+    .biography-body p {
+        font-size: 0.98rem;
+        line-height: 1.75;
     }
 
     .tl-entry {
-        grid-template-columns: 4rem minmax(0, 1fr);
-        gap: 0.45rem 1rem;
+        grid-template-columns: 4.3rem minmax(0, 1fr);
+        gap: 0.4rem 1rem;
+        padding: 1.5rem 0;
     }
 
     .tl-title {
@@ -853,16 +972,14 @@ section {
 
     .tl-sub {
         grid-column: 2;
-        margin-top: -0.1rem;
+        grid-row: 2;
+        margin-top: -0.05rem;
     }
 
     .tl-detail {
         grid-column: 2;
+        grid-row: 3;
         margin-top: 0.45rem;
-    }
-
-    .tl-dot {
-        display: none;
     }
 
     .category-grid,
@@ -883,16 +1000,18 @@ section {
     .page-category footer {
         align-items: flex-start;
         flex-direction: column;
-        gap: 0.6rem;
+        gap: 0.65rem;
     }
 }
 
 @media (max-width: 430px) {
     .editorial-nav {
-        gap: 1.1rem;
-        justify-content: flex-start;
-        padding-bottom: 0.25rem;
-        scrollbar-width: none;
+        gap: 0.55rem;
+    }
+
+    .editorial-brand,
+    .editorial-nav a {
+        font-size: 0.64rem;
     }
 
     .card-heading {
@@ -911,9 +1030,16 @@ section {
         gap: 1rem;
     }
 
+    .cv-current .eyebrow,
+    .cv-current h2,
     .cv-current > p:last-child {
         grid-column: 1;
-        margin: 0;
+        grid-row: auto;
+    }
+
+    .contact-page-card a {
+        font-size: 0.91rem;
+        overflow-wrap: anywhere;
     }
 }
 
