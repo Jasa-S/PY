@@ -1,6 +1,15 @@
 # Yeongshin Park
 
-Static portfolio website based on Yeongshin Park's German CV. The visual system follows the layout of `jasa-s.github.io`: compact typography, a timeline, translucent cards, responsive spacing, and automatic light/dark mode.
+Multi-page portfolio website based on Yeongshin Park's German CV. The visual system follows the layout of `jasa-s.github.io`: compact typography, a timeline, translucent cards, responsive spacing, and automatic light/dark mode.
+
+## Pages
+
+- `index.html` - overview
+- `konzerte.html` - concert history
+- `ausbildung.html` - academic training
+- `meisterkurse.html` - masterclasses
+- `auszeichnungen.html` - competitions and scholarships
+- `sprachen.html` - languages and contact
 
 ## Local preview
 
