@@ -1,13 +1,51 @@
 import { access, readFile } from 'node:fs/promises';
 
 const pages = {
-  'index.html': ['Yeongshin Park', 'Lebenslauf entdecken', 'konzerte.html'],
-  'konzerte.html': ['Konzerte', 'Weihnachtsoratorium', 'tl-dot'],
-  'ausbildung.html': ['Ausbildung', 'Musik und Kunst Privatuniversität', 'Korea National University of Arts'],
-  'meisterkurse.html': ['Meisterkurse', 'Vielklang Akademie', 'Urbino Musica Antica 2022'],
-  'auszeichnungen.html': ['Auszeichnungen', 'Seoul International Recorder Competition', 'Saturday Recorder Quartetts'],
-  'sprachen.html': ['Sprachen &amp; Kontakt', 'Koreanisch', 'mailto:yeongshinpark1@gmail.com']
+  'index.html': {
+    current: 'Übersicht',
+    required: ['Historisch informierte Aufführungspraxis', 'Konzertprojekte', 'Biografie lesen', 'Musikalische Anfrage']
+  },
+  'biografie.html': {
+    current: 'Biografie',
+    required: ['Künstlerisches Profil', 'Sligo Baroque Music Festival', 'Prof. Andreas Helm']
+  },
+  'konzerte.html': {
+    current: 'Konzerte',
+    required: ['Weihnachtsoratorium', 'Sligo Baroque Music Festival', 'tl-dot']
+  },
+  'lebenslauf.html': {
+    current: 'Lebenslauf',
+    required: ['Curriculum Vitae', 'ausbildung.html', 'meisterkurse.html', 'auszeichnungen.html', 'sprachen.html']
+  },
+  'kontakt.html': {
+    current: 'Kontakt',
+    required: ['Musikalische Anfragen', 'mailto:yeongshinpark1@gmail.com', 'Wien, Österreich']
+  },
+  'ausbildung.html': {
+    current: 'Lebenslauf',
+    required: ['Musik und Kunst Privatuniversität', 'Korea National University of Arts']
+  },
+  'meisterkurse.html': {
+    current: 'Lebenslauf',
+    required: ['Vielklang Akademie', 'Urbino Musica Antica 2022']
+  },
+  'auszeichnungen.html': {
+    current: 'Lebenslauf',
+    required: ['Seoul International Recorder Competition', 'Saturday Recorder Quartetts']
+  },
+  'sprachen.html': {
+    current: 'Lebenslauf',
+    required: ['Koreanisch', 'Englisch', 'Deutsch']
+  }
 };
+
+const primaryNavigation = [
+  ['index.html', 'Übersicht'],
+  ['biografie.html', 'Biografie'],
+  ['konzerte.html', 'Konzerte'],
+  ['lebenslauf.html', 'Lebenslauf'],
+  ['kontakt.html', 'Kontakt']
+];
 
 const knownLocalFiles = new Set([
   ...Object.keys(pages),
@@ -18,7 +56,7 @@ const knownLocalFiles = new Set([
 
 const titles = new Set();
 
-for (const [page, requiredText] of Object.entries(pages)) {
+for (const [page, expectations] of Object.entries(pages)) {
   const html = await readFile(page, 'utf8');
 
   if (!html.includes('<html lang="de">')) throw new Error(`${page}: missing German language declaration`);
@@ -33,7 +71,14 @@ for (const [page, requiredText] of Object.entries(pages)) {
   if (titles.has(title)) throw new Error(`${page}: duplicate title: ${title}`);
   titles.add(title);
 
-  for (const text of requiredText) {
+  for (const [href, label] of primaryNavigation) {
+    if (!html.includes(`href="${href}"`)) throw new Error(`${page}: missing primary navigation link: ${label}`);
+  }
+
+  const currentPattern = new RegExp(`<a href="[^"]+" aria-current="page">${expectations.current}<\\/a>`);
+  if (!currentPattern.test(html)) throw new Error(`${page}: wrong or missing active navigation state`);
+
+  for (const text of expectations.required) {
     if (!html.includes(text)) throw new Error(`${page}: missing required content: ${text}`);
   }
 
@@ -46,9 +91,14 @@ for (const [page, requiredText] of Object.entries(pages)) {
   }
 }
 
+const home = await readFile('index.html', 'utf8');
+if (home.includes('Profil in Zahlen') || home.includes('Lebenslauf entdecken')) {
+  throw new Error('index.html: homepage still leads with CV-oriented framing');
+}
+
 const concerts = await readFile('konzerte.html', 'utf8');
 if (/tl-dot\s+(?:active|past)/.test(concerts)) {
   throw new Error('konzerte.html: concert dots must not imply a highlighted or ranked event');
 }
 
-console.log(`Validated ${Object.keys(pages).length} pages, unique titles, navigation, content, and local assets.`);
+console.log(`Validated ${Object.keys(pages).length} pages, artist-focused navigation, unique titles, content, and local assets.`);

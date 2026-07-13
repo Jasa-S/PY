@@ -196,7 +196,12 @@ a {
 
 .site-nav a:focus-visible,
 .category-card:focus-visible,
+.primary-button:focus-visible,
+.secondary-link:focus-visible,
+.text-arrow-link:focus-visible,
+.back-link:focus-visible,
 .contact-button:focus-visible,
+.contact-page-card a:focus-visible,
 footer a:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
@@ -357,6 +362,236 @@ section {
     color: var(--text-muted);
     font-size: 0.875rem;
     line-height: 1.65;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.artist-hero {
+    padding: 2rem;
+}
+
+.artist-hero h2 {
+    max-width: 36rem;
+    margin: 0.55rem 0 0;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.18;
+}
+
+.artist-hero > p:not(.eyebrow) {
+    max-width: 37rem;
+    margin: 1rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+}
+
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    background: var(--text-main);
+    color: var(--bg);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.secondary-link,
+.text-arrow-link {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.section-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.section-title-row .section-heading {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.section-title-row > a {
+    flex: 0 0 auto;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.project-card {
+    min-height: 14rem;
+}
+
+.project-date {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.03em;
+    line-height: 1.45;
+}
+
+.project-card h3 {
+    margin: 1.25rem 0 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.project-card > p:last-child {
+    margin: 0.65rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    line-height: 1.55;
+}
+
+.biography-teaser {
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.8fr) minmax(0, 1.35fr);
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--timeline);
+    border-bottom: 1px solid var(--timeline);
+}
+
+.biography-teaser h2 {
+    margin: 0.5rem 0 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.biography-teaser > div:last-child > p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.65;
+}
+
+.text-arrow-link {
+    display: inline-flex;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.biography-body {
+    max-width: 40rem;
+}
+
+.biography-body p {
+    margin: 0 0 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+.biography-body .biography-lead {
+    color: var(--text-main);
+    font-size: 1.12rem;
+    line-height: 1.65;
+}
+
+.cv-current {
+    padding: 1.5rem;
+}
+
+.cv-current h2 {
+    margin: 0.6rem 0 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.cv-current > p:last-child {
+    margin: 0.6rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.cv-category-grid .category-card {
+    min-height: 12rem;
+}
+
+.contact-page-card {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.75rem;
+}
+
+.contact-symbol {
+    display: grid;
+    width: 4rem;
+    height: 4rem;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--card-hover);
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.contact-page-card h2 {
+    margin: 0.5rem 0 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.contact-page-card a {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.contact-page-card div > p:last-child {
+    margin: 0.55rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.contact-note h2 {
+    margin: 0 0 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .home-intro {
@@ -678,8 +913,17 @@ footer a {
     }
 
     .site-nav a:hover,
+    .secondary-link:hover,
+    .text-arrow-link:hover,
+    .back-link:hover,
+    .section-title-row > a:hover,
     footer a:hover {
         color: var(--text-main);
+    }
+
+    .primary-button:hover {
+        opacity: 0.86;
+        transform: translateY(-1px);
     }
 
     .glass:hover {
@@ -688,7 +932,11 @@ footer a {
         transform: translateY(-4px);
     }
 
-    .home-intro:hover {
+    .home-intro:hover,
+    .artist-hero:hover,
+    .project-card:hover,
+    .cv-current:hover,
+    .contact-page-card:hover {
         border-color: var(--border);
         box-shadow: var(--glass-shadow-compact);
         transform: none;
@@ -754,6 +1002,27 @@ footer a {
         gap: 1.5rem;
     }
 
+    .artist-hero {
+        padding: 1.5rem;
+    }
+
+    .artist-hero h2 {
+        font-size: 1.55rem;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-card {
+        min-height: auto;
+    }
+
+    .biography-teaser {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
     .category-grid,
     .masterclass-grid {
         grid-template-columns: 1fr;
@@ -775,6 +1044,10 @@ footer a {
         align-items: flex-start;
         flex-direction: column;
         gap: 1.25rem;
+    }
+
+    .contact-page-card {
+        grid-template-columns: 1fr;
     }
 
     .card-heading {
