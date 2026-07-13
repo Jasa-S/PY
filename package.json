@@ -1,0 +1,11 @@
+{
+  "name": "yeongshin-park-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/validate-site.mjs && node --check theme.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
