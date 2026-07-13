@@ -2,8 +2,8 @@ import { access, readFile } from 'node:fs/promises';
 
 const pages = {
   'index.html': {
-    current: 'Übersicht',
-    required: ['Historisch informierte Aufführungspraxis', 'Konzertprojekte', 'Biografie lesen', 'Musikalische Anfrage']
+    current: null,
+    required: ['editorial-home', 'Künstlerisches Porträt', 'Barockoboe · Blockflöte', 'assets/oboe-reed-portrait.jpg']
   },
   'biografie.html': {
     current: 'Biografie',
@@ -49,6 +49,9 @@ const primaryNavigation = [
 
 const knownLocalFiles = new Set([
   ...Object.keys(pages),
+  'assets/oboe-score-dark.jpg',
+  'assets/oboe-reed-portrait.jpg',
+  'assets/oboe-score-light.jpg',
   'shared.css',
   'site-icon.svg',
   'theme.js'
@@ -60,7 +63,7 @@ for (const [page, expectations] of Object.entries(pages)) {
   const html = await readFile(page, 'utf8');
 
   if (!html.includes('<html lang="de">')) throw new Error(`${page}: missing German language declaration`);
-  if (!html.includes('<main>')) throw new Error(`${page}: missing main landmark`);
+  if (!/<main(?:\s|>)/.test(html)) throw new Error(`${page}: missing main landmark`);
   if (!html.includes('aria-label="Hauptnavigation"')) throw new Error(`${page}: missing main navigation label`);
 
   const h1Count = (html.match(/<h1(?:\s|>)/g) || []).length;
@@ -72,11 +75,15 @@ for (const [page, expectations] of Object.entries(pages)) {
   titles.add(title);
 
   for (const [href, label] of primaryNavigation) {
-    if (!html.includes(`href="${href}"`)) throw new Error(`${page}: missing primary navigation link: ${label}`);
+    if (!html.includes(`href="${href}"`)) throw new Error(`${page}: missing site link: ${label}`);
   }
 
-  const currentPattern = new RegExp(`<a href="[^"]+" aria-current="page">${expectations.current}<\\/a>`);
-  if (!currentPattern.test(html)) throw new Error(`${page}: wrong or missing active navigation state`);
+  if (expectations.current) {
+    const currentPattern = new RegExp(`<a href="[^"]+" aria-current="page">${expectations.current}<\\/a>`);
+    if (!currentPattern.test(html)) throw new Error(`${page}: wrong or missing active navigation state`);
+  } else if (!html.includes('<a class="editorial-brand" href="index.html" aria-current="page">')) {
+    throw new Error(`${page}: homepage brand must identify the current page`);
+  }
 
   for (const text of expectations.required) {
     if (!html.includes(text)) throw new Error(`${page}: missing required content: ${text}`);
@@ -92,8 +99,12 @@ for (const [page, expectations] of Object.entries(pages)) {
 }
 
 const home = await readFile('index.html', 'utf8');
-if (home.includes('Profil in Zahlen') || home.includes('Lebenslauf entdecken')) {
+if (home.includes('Profil in Zahlen') || home.includes('project-grid') || home.includes('Lebenslauf entdecken')) {
   throw new Error('index.html: homepage still leads with CV-oriented framing');
+}
+
+if ((home.match(/class="portrait-panel/g) || []).length !== 3) {
+  throw new Error('index.html: editorial triptych is incomplete');
 }
 
 const concerts = await readFile('konzerte.html', 'utf8');
@@ -101,4 +112,4 @@ if (/tl-dot\s+(?:active|past)/.test(concerts)) {
   throw new Error('konzerte.html: concert dots must not imply a highlighted or ranked event');
 }
 
-console.log(`Validated ${Object.keys(pages).length} pages, artist-focused navigation, unique titles, content, and local assets.`);
+console.log(`Validated ${Object.keys(pages).length} pages, editorial homepage, artist-focused navigation, unique titles, content, and local assets.`);
