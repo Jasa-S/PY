@@ -1,23 +1,19 @@
 # Yeongshin Park
 
-Multi-page portfolio website based on Yeongshin Park's German CV. The visual system uses a restrained, image-led editorial homepage, airy typography, neutral timelines, and dedicated pages for the artistic biography, concerts, CV, and contact.
+Multi-page portfolio website based on Yeongshin Park's German CV. The visual system uses a restrained, image-led editorial homepage, airy typography, neutral concert lists, and dedicated pages for the artistic profile, concerts, and contact.
 
 The homepage instrument still lifes are original AI-generated editorial assets created for this site; they do not depict Yeongshin Park. Typography uses a self-hosted Manrope variable font, distributed under the SIL Open Font License in `assets/manrope-OFL.txt`.
 
 ## Primary pages
 
 - `index.html` - overview
-- `biografie.html` - artistic biography
+- `biografie.html` - About page with biography and selected artistic milestones
 - `konzerte.html` - concert history
-- `lebenslauf.html` - CV hub
 - `kontakt.html` - booking and project contact
 
-## CV detail pages
+## Legacy routes
 
-- `ausbildung.html` - academic training
-- `meisterkurse.html` - masterclasses
-- `auszeichnungen.html` - competitions and scholarships
-- `sprachen.html` - languages
+The former CV hub and detail URLs redirect to the relevant section of `biografie.html`, preserving existing links without exposing a résumé-style navigation structure.
 
 ## Local preview
 

@@ -6,49 +6,37 @@ const pages = {
     required: ['editorial-home', 'Künstlerisches Porträt', 'Barockoboe · Blockflöte', 'assets/oboe-reed-portrait.jpg']
   },
   'biografie.html': {
-    current: 'Biografie',
-    required: ['Künstlerisches Profil', 'Sligo Baroque Music Festival', 'Prof. Andreas Helm']
+    current: 'Über mich',
+    required: ['Künstlerisches Profil', 'Ausgewählte Stationen', 'Prof. Andreas Helm', 'Seoul International Recorder Competition']
   },
   'konzerte.html': {
     current: 'Konzerte',
     required: ['Weihnachtsoratorium', 'Sligo Baroque Music Festival', 'tl-dot']
   },
-  'lebenslauf.html': {
-    current: 'Lebenslauf',
-    required: ['Curriculum Vitae', 'ausbildung.html', 'meisterkurse.html', 'auszeichnungen.html', 'sprachen.html']
-  },
   'kontakt.html': {
     current: 'Kontakt',
     required: ['Musikalische Anfragen', 'mailto:yeongshinpark1@gmail.com', 'Wien, Österreich']
-  },
-  'ausbildung.html': {
-    current: 'Lebenslauf',
-    required: ['Musik und Kunst Privatuniversität', 'Korea National University of Arts']
-  },
-  'meisterkurse.html': {
-    current: 'Lebenslauf',
-    required: ['Vielklang Akademie', 'Urbino Musica Antica 2022']
-  },
-  'auszeichnungen.html': {
-    current: 'Lebenslauf',
-    required: ['Seoul International Recorder Competition', 'Saturday Recorder Quartetts']
-  },
-  'sprachen.html': {
-    current: 'Lebenslauf',
-    required: ['Koreanisch', 'Englisch', 'Deutsch']
   }
 };
 
+const redirects = {
+  'lebenslauf.html': 'biografie.html#stationen',
+  'ausbildung.html': 'biografie.html#stationen',
+  'meisterkurse.html': 'biografie.html#impulse',
+  'auszeichnungen.html': 'biografie.html#auszeichnungen',
+  'sprachen.html': 'biografie.html#ueber-mich'
+};
+
 const primaryNavigation = [
-  ['index.html', 'Übersicht'],
-  ['biografie.html', 'Biografie'],
+  ['index.html', 'Start'],
+  ['biografie.html', 'Über mich'],
   ['konzerte.html', 'Konzerte'],
-  ['lebenslauf.html', 'Lebenslauf'],
   ['kontakt.html', 'Kontakt']
 ];
 
 const knownLocalFiles = new Set([
   ...Object.keys(pages),
+  ...Object.keys(redirects),
   'assets/oboe-score-dark.jpg',
   'assets/oboe-reed-portrait.jpg',
   'assets/oboe-score-light.jpg',
@@ -58,6 +46,7 @@ const knownLocalFiles = new Set([
   'theme.js'
 ]);
 
+const retiredNavigationTargets = Object.keys(redirects);
 const titles = new Set();
 
 for (const [page, expectations] of Object.entries(pages)) {
@@ -79,6 +68,10 @@ for (const [page, expectations] of Object.entries(pages)) {
     if (!html.includes(`href="${href}"`)) throw new Error(`${page}: missing site link: ${label}`);
   }
 
+  for (const retiredTarget of retiredNavigationTargets) {
+    if (html.includes(`href="${retiredTarget}"`)) throw new Error(`${page}: still links to retired CV page: ${retiredTarget}`);
+  }
+
   if (expectations.current) {
     const currentPattern = new RegExp(`<a href="[^"]+" aria-current="page">${expectations.current}<\\/a>`);
     if (!currentPattern.test(html)) throw new Error(`${page}: wrong or missing active navigation state`);
@@ -90,7 +83,7 @@ for (const [page, expectations] of Object.entries(pages)) {
     if (!html.includes(text)) throw new Error(`${page}: missing required content: ${text}`);
   }
 
-  if (html.includes('fonts.googleapis.com') || html.includes("prefers-color-scheme: dark")) {
+  if (html.includes('fonts.googleapis.com') || html.includes('prefers-color-scheme: dark')) {
     throw new Error(`${page}: external or conflicting font/theme bootstrap remains`);
   }
 
@@ -103,6 +96,12 @@ for (const [page, expectations] of Object.entries(pages)) {
   }
 }
 
+for (const [page, destination] of Object.entries(redirects)) {
+  const html = await readFile(page, 'utf8');
+  if (!html.includes(`content="0; url=${destination}"`)) throw new Error(`${page}: missing redirect to ${destination}`);
+  if (!html.includes(`href="${destination}"`)) throw new Error(`${page}: missing accessible fallback link`);
+}
+
 const home = await readFile('index.html', 'utf8');
 const css = await readFile('shared.css', 'utf8');
 
@@ -112,7 +111,8 @@ await access('assets/manrope-OFL.txt');
 if (!css.includes('@font-face') || !css.includes('manrope-variable.ttf')) {
   throw new Error('shared.css: self-hosted typography is not configured');
 }
-if (home.includes('Profil in Zahlen') || home.includes('project-grid') || home.includes('Lebenslauf entdecken')) {
+
+if (home.includes('Profil in Zahlen') || home.includes('project-grid') || home.includes('Lebenslauf')) {
   throw new Error('index.html: homepage still leads with CV-oriented framing');
 }
 
@@ -120,9 +120,14 @@ if ((home.match(/class="portrait-panel/g) || []).length !== 3) {
   throw new Error('index.html: editorial triptych is incomplete');
 }
 
+const about = await readFile('biografie.html', 'utf8');
+if (about.includes('href="lebenslauf.html"') || !about.includes('id="stationen"')) {
+  throw new Error('biografie.html: CV content is not properly consolidated');
+}
+
 const concerts = await readFile('konzerte.html', 'utf8');
 if (/tl-dot\s+(?:active|past)/.test(concerts)) {
   throw new Error('konzerte.html: concert dots must not imply a highlighted or ranked event');
 }
 
-console.log(`Validated ${Object.keys(pages).length} pages, editorial homepage, artist-focused navigation, unique titles, content, and local assets.`);
+console.log(`Validated ${Object.keys(pages).length} core pages, ${Object.keys(redirects).length} legacy redirects, consolidated About content, and local assets.`);
